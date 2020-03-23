@@ -1,0 +1,5 @@
+@include('fixed/dashboard/head')
+@include('fixed/dashboard/nav')
+@include('fixed/dashboard/sidebar')
+@yield('content')
+@include('fixed/dashboard/footer')
