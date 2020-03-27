@@ -18,6 +18,7 @@ use File;
 
 
 
+
 class UserController extends Controller
 {
   private $userModel;
@@ -51,6 +52,7 @@ class UserController extends Controller
       return view('pages/dashboard/logs', ['log_file' => $log_file]);
 
     }
+
     public function shoppingCart()
     {
       $user = session() -> get('user');
@@ -101,7 +103,7 @@ class UserController extends Controller
 
         if($user_cart -> isEmpty())
         {
-          
+
           return response(['user_cart' => null], 200);
         }
         else {
@@ -127,7 +129,7 @@ class UserController extends Controller
 
       $checkout_validator = Validator::make($request -> all(), [
         'name' => 'required|regex:/^[A-z]{3,10}(\s[A-z]{3,10})*$/',
-        'address' => 'required|regex:/^([A-z]+\s*\d*)/|min:5|max:30',
+        'address' => 'required|regex:/^([A-z]+\s*\d*)/|min:3|max:30',
         'phone' => 'required|regex:/^\+1[0-9]{6,10}$/'
 
       ]);
@@ -212,7 +214,7 @@ class UserController extends Controller
 
           $sent_new_pass = changePassword($email, $content_message_cng_pass);
 
-          $result = $sent_new_pass ? 'Your password is successfully updated! Please check an e-mail!' : 'PLease try again later!';
+          $result = $sent_new_pass ? 'Your password is successfully updated! Be sure to check your e-mail!' : 'PLease try again later!';
 
 
 
@@ -254,22 +256,32 @@ class UserController extends Controller
       {
         $user_id = $emailExists -> user_ID;
         $username = $emailExists -> username;
-        $reset_pass = \Str::random(8);
+        // $reset_pass = \Str::random(8);
 
 
-        $updated_password = $this -> userModel -> resetPassword($user_id, $reset_pass);
+        // $updated_password = $this -> userModel -> resetPassword($user_id, $reset_pass);
+        $content_message = 'Dear ' . $username . ', please click on the link to reset password: ';
+        $content_message .= '
+        <form id="form_reset_pass_code"  action="' . url('reset_pass_code'). '" method="post">
+        ' . csrf_field(). '
+            <input  type="hidden" name="hidden_username" value="'. $user_id. '">
+            <input class="" type="submit" name="user_id_reset_pass" value="Reset">
+        </form>
 
-        $content_message = 'Dear ' . $username . ',<br> your new password is: ' . $reset_pass . '<br>Don\'t forget to change! :)';
 
-        if($updated_password)
-        {
+        ';
+        // $content_message .= "<a href='" . url('reset_pass_code'). '/'. $user_id ."'>RESET</a>";
+        // $content_message = 'Dear ' . $username . ',<br> your new password is: ' . $reset_pass . '<br>Don\'t forget to change! :)';
+
+        // if($content_message)
+        // {
           $sent = changePassword($email, $content_message);
 
-          $result = $sent ? 'Your password is successfully updated! Please check an e-mail!' : 'PLease try again later!';
+          $result = $sent ? 'Please check an e-mail!' : 'PLease try again later!';
           return back() -> with('message', $result);
 
 
-        }
+        // }
       }
 
       else {
@@ -277,6 +289,33 @@ class UserController extends Controller
         return back() -> with('message', $result);
       }
 
+
+    }
+
+    public function passCode(Request $request)
+    {
+      $id = $request -> hidden_username;
+      $user = $this -> userModel -> getUser($id);
+      if($user != null)
+      {
+        $reset_pass = \Str::random(8);
+        $updated_password = $this -> userModel -> resetPassword($user -> user_ID, $reset_pass);
+        $content_message = 'Dear ' . $user -> username . ',<br> your new password is: ' . $reset_pass . '<br>Don\'t forget to change! :)';
+
+        if($updated_password)
+        {
+          $sent = changePassword($user -> email, $content_message);
+
+          $result = $sent ? 'Your password is successfully updated! Please check an e-mail!' : 'PLease try again later!';
+          return redirect('/forgot_password') -> with('message', $result);
+        }
+      }
+      else {
+
+          $result = 'Sorry, this user doesn\'t exist!';
+          return redirect('/forgot_password') -> with('message', $result);
+
+      }
 
     }
 

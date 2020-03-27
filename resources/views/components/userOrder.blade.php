@@ -10,7 +10,7 @@
 
 <td>{{$o -> date}} </td>
 
-<td>{{$o -> productNumber}} products</td>
+<td>{{$o -> productNumber}} product(s)</td>
 
 <td>{{$o -> total_price}} $</td>
 

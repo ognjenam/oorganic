@@ -1,6 +1,10 @@
 
 
 $(document).ready(function(){
+  $(document).on('click', '.pagination-links', function(){
+
+
+  })
   $(document).on('click', '.remove-from-user-cart', function()
   {
 
@@ -16,7 +20,7 @@ $(document).ready(function(){
       },
       success : function(data)
       {
-        
+
         if(data.user_cart == null)
         {
 
@@ -121,8 +125,16 @@ $(document).ready(function(){
       },
       success: function(data)
       {
+        if(data.length == 0)
+        {
+          $("#ajaxProductsByCategory").removeClass('row')
+          $("#ajaxProductsByCategory").html("<p>Sorry, products are not available yet!</p>");
+        }
+        else {
+          $("#ajaxProductsByCategory").addClass('row')
+          filterProductsByCategory(data);
+        }
 
-        filterProductsByCategory(data);
       },
       error : function(xhr, status, responseText)
       {
@@ -176,7 +188,7 @@ var rePassword = /([A-z]\d*\W*){5,15}/;
 
 var reName = /^[A-z]{3,10}(\s[A-z]{3,10})*$/;
 var rePhone = /^\+1[0-9]{6,10}$/;
-var reAddress = /^([A-z]+\s*\d*){5,30}/;
+var reAddress = /([A-z]+\s*\d*){3,30}/;
 
 var reProduct = /^([A-z](\s[A-z])*){3,30}$/;
 var reCategory= /^([A-z](\s[A-z])*){3,15}$/;
@@ -190,48 +202,48 @@ var reDescription = /([A-z]\d*\W*){5,200}/;
     let username_value = $('#login-username').val();
     let password_value = $('#login-password').val();
 
-    // if(!reUsername.test(username_value))
-    // {
-    //
-    //   if(username_value == '')
-    //   {
-    //     $('#login-username-error').html('Username is requred!')
-    //   }
-    //
-    //   else {
-    //     $('#login-username-error').html('Username is not in good format!')
-    //   }
-    //
-    //
-    //   flag++;
-    //
-    //
-    // }
-    //
-    // else {
-    //
-    //   $('#login-username-error').html('')
-    // }
-    //
-    //
-    // if(!rePassword.test(password_value))
-    // {
-    //   if($('#login-password').val() == '')
-    //   {
-    //     $('#login-password-error').html('Password is requred!')
-    //   }
-    //
-    //   else {
-    //     $('#login-password-error').html('Password is not in good format!')
-    //   }
-    //   flag++;
-    //
-    // }
-    //
-    // else {
-    //
-    //   $('#login-password-error').html('')
-    // }
+    if(!reUsername.test(username_value))
+    {
+
+      if(username_value == '')
+      {
+        $('#login-username-error').html('Username is requred!')
+      }
+
+      else {
+        $('#login-username-error').html('Username is not in good format!')
+      }
+
+
+      flag++;
+
+
+    }
+
+    else {
+
+      $('#login-username-error').html('')
+    }
+
+
+    if(!rePassword.test(password_value))
+    {
+      if($('#login-password').val() == '')
+      {
+        $('#login-password-error').html('Password is requred!')
+      }
+
+      else {
+        $('#login-password-error').html('Password is not in good format!')
+      }
+      flag++;
+
+    }
+
+    else {
+
+      $('#login-password-error').html('')
+    }
 
     if(flag > 0)
     {
@@ -260,27 +272,27 @@ function validateResetPass()
 
   let flag = 0;
 
-  // return true;
-  //
-  // if(!reEmail.test(email))
-  // {
-  //   $("#email-reset-pass-error").text('E-mail is not in good format!')
-  //   flag++;
-  // }
-  //
-  // else {
-  //   $("#email-reset-pass-error").text('')
-  // }
-  //
-  // if(!reEmail.test(email_verify))
-  // {
-  //   $("#email-re-enter-reset-pass-error").text('E-mail is not in good format!')
-  //   flag++;
-  // }
-  //
-  // else {
-  //   $("#email-re-enter-reset-pass-error").text('')
-  // }
+  return true;
+
+  if(!reEmail.test(email))
+  {
+    $("#email-reset-pass-error").text('E-mail is not in good format!')
+    flag++;
+  }
+
+  else {
+    $("#email-reset-pass-error").text('')
+  }
+
+  if(!reEmail.test(email_verify))
+  {
+    $("#email-re-enter-reset-pass-error").text('E-mail is not in good format!')
+    flag++;
+  }
+
+  else {
+    $("#email-re-enter-reset-pass-error").text('')
+  }
 
   if(flag > 0)
   {
@@ -309,26 +321,26 @@ function validateChangePass()
   let password = $("#new_password").val()
   let password_verify = $("#new_password_verify").val()
 
-  // if(!rePassword.test(password))
-  // {
-  //   flag++;
-  //   $("#new_password_error").text('Password is not in good format!')
-  // }
-  //
-  // else {
-  //   $("#new_password_error").text('')
-  // }
-  //
-  // if(!rePassword.test(password_verify))
-  // {
-  //   flag++;
-  //   $("#new_password_error_verify").text('Password is not in good format!')
-  // }
-  //
-  // else {
-  //   $("#new_password_error_verify").text('')
-  // }
-  //
+  if(!rePassword.test(password))
+  {
+    flag++;
+    $("#new_password_error").text('Password is not in good format!')
+  }
+
+  else {
+    $("#new_password_error").text('')
+  }
+
+  if(!rePassword.test(password_verify))
+  {
+    flag++;
+    $("#new_password_error_verify").text('Password is not in good format!')
+  }
+
+  else {
+    $("#new_password_error_verify").text('')
+  }
+
   if(flag == 0)
   {
     if(password == password_verify)
@@ -390,70 +402,70 @@ function validateRegister()
   let password_value = $('#register-password').val();
   let email_value = $('#register-email').val();
 
-  //
-  // if(!reEmail.test(email_value))
-  // {
-  //   if(email_value == '')
-  //   {
-  //     $('#register-email-error').html('Email is requred!')
-  //   }
-  //
-  //   else
-  //   {
-  //     $('#register-email-error').html('Email is not in good format!')
-  //   }
-  //
-  //
-  //   flag++;
-  // }
-  //
-  // else {
-  //   if(email_value.length > 30)
-  //   {
-  //     $('#register-email-error').html('Email is too long!')
-  //     flag++;
-  //     console.log(flag)
-  //   }
-  //   else {
-  //     $('#register-email-error').html('');
-  //     console.log(flag)
-  //   }
-  //
-  // }
-  //
-  // if(!reUsername.test(username_value))
-  // {
-  //   if(username_value == '')
-  //   {
-  //     $('#register-username-error').html('Username is requred!')
-  //   }
-  //
-  //   else {
-  //     $('#register-username-error').html('Username is not in good format!')
-  //   }
-  //   flag++;
-  // }
-  //
-  // else {
-  //   $('#register-username-error').html('');
-  // }
-  //
-  // if(!rePassword.test(password_value))
-  // {
-  //   if(password_value == '')
-  //   {
-  //     $('#register-password-error').html('Password is requred!')
-  //   }
-  //
-  //   else {
-  //     $('#register-password-error').html('Password is not in good format!')
-  //   }
-  //   flag++;
-  // }
-  //
-  // else {
-  //   $('#register-password-error').html('');
-  // }
+
+  if(!reEmail.test(email_value))
+  {
+    if(email_value == '')
+    {
+      $('#register-email-error').html('Email is requred!')
+    }
+
+    else
+    {
+      $('#register-email-error').html('Email is not in good format!')
+    }
+
+
+    flag++;
+  }
+
+  else {
+    if(email_value.length > 30)
+    {
+      $('#register-email-error').html('Email is too long!')
+      flag++;
+      console.log(flag)
+    }
+    else {
+      $('#register-email-error').html('');
+      console.log(flag)
+    }
+
+  }
+
+  if(!reUsername.test(username_value))
+  {
+    if(username_value == '')
+    {
+      $('#register-username-error').html('Username is requred!')
+    }
+
+    else {
+      $('#register-username-error').html('Username is not in good format!')
+    }
+    flag++;
+  }
+
+  else {
+    $('#register-username-error').html('');
+  }
+
+  if(!rePassword.test(password_value))
+  {
+    if(password_value == '')
+    {
+      $('#register-password-error').html('Password is requred!')
+    }
+
+    else {
+      $('#register-password-error').html('Password is not in good format!')
+    }
+    flag++;
+  }
+
+  else {
+    $('#register-password-error').html('');
+  }
 
   if(flag > 0)
   {
@@ -498,46 +510,51 @@ function check_img()
   $('#update-account').on('click', function(){
 
 
-    // if($('#img-path').text() != '')
-    // {
-    //
-    //   let valid = ['jpg', 'jpeg', 'png', 'gif'];
-    //   let image_path = img_value.split('\\');
-    //
-    //
-    //   let image_split_ = image_path[2];
-    //
-    //
-    //
-    //   let image_extension = image_split_.split('.')
-    //
-    //
-    //
-    //
-    //
-    //   if(valid.includes(image_extension[1])){
-    //
-    //
-    //
-    //     let file_size =$('#file-img-account')[0].files[0].size;
-    //
-    //
-    //
-    //     if(file_size > 2000000)
-    //     {
-    //       $('#img-path').text('Please upload less than 2MB!');
-    //
-    //
-    //     }
-    //
-    //     else {
-    //
-    //       sendAjaxCall();
-    //     }
-    //
-    //   }
-    // }
-    sendAjaxCall()
+    if($('#img-path').text() != '')
+    {
+
+      let valid = ['jpg', 'jpeg', 'png', 'gif'];
+      let image_path = img_value.split('\\');
+
+
+      let image_split_ = image_path[2];
+
+
+
+      let image_extension = image_split_.split('.')
+
+
+
+
+
+      if(valid.includes(image_extension[1])){
+
+
+
+        let file_size =$('#file-img-account')[0].files[0].size;
+
+
+
+        if(file_size > 2000000)
+        {
+          $('#img-path').text('Please upload less than 2MB!');
+
+
+
+        }
+
+        else {
+
+          sendAjaxCall();
+        }
+
+      }
+
+      else {
+        $('#img-path').text('JPG, JPEG, PNG, GIF');
+      }
+    }
+
       // sendAjaxCall();
       function sendAjaxCall(){
         let xhr = new XMLHttpRequest();
@@ -614,90 +631,90 @@ $(document).ready(function(){
     let image = $("#product-file")[0].files[0];
 
 
-    //
-    //
-    // if(image_path != '')
-    // {
-    //   let image_size = image.size;
-    //   let image_type = image.type;
-    //
-    //   let max_size = 2000000; // 2MB -> 2 000  000 bytes // JS returns the size in bytes
-    //   let allowed_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
-    //   if(image_size > max_size){
-    //     $('#add-product-image-error').text('Please not above 2MB!')
-    //     flag = true;
-    //   }
-    //
-    //   else {
-    //     $('#add-product-image-error').html(final_add_img_path_product[2])
-    //
-    //     if(!allowed_types.includes(image_type))
-    //     {
-    //       flag = true;
-    //       $('#add-product-image-error').text('jpeg, jpg, png, gif')
-    //     }
-    //
-    //     else {
-    //       $('#add-product-image-error').html(final_add_img_path_product[2])
-    //     }
-    //   }
-    //
-    //
-    // }
-    //
-    // else {
-    //   flag = true;
-    //   $('#add-product-image-error').text('Please add image!')
-    // }
-    //
-    //
-    //
-    // if(!reProduct.test(name))
-    // {
-    //   $("#add-product-name-error").text('Name is not correct!')
-    //   flag = true;
-    // }
-    // else {
-    //   $("#add-product-name-error").text('')
-    // }
-    //
-    // if(!rePrice.test(price))
-    // {
-    //   $("#add-product-price-error").text('Price is not correct!')
-    //   flag = true;
-    // }
-    // else {
-    //   $("#add-product-price-error").text('')
-    // }
-    //
-    // if(!reDescription.test(description))
-    // {
-    //   $("#add-product-description-error").text('Description is not correct!')
-    //   flag = true;
-    //
-    //
-    // }
-    // else {
-    //   if((/[\>\<\*]/).test(description))
-    //   {
-    //     $("#add-product-description-error").text('<>, * are not allowed!')
-    //     flag = true;
-    //   }
-    //   else {
-    //       $("#add-product-description-error").text('')
-    //   }
-    //
-    // }
-    //
-    // if(category_id == 0) {
-    //     $("#add-product-category-error").text('Please choose a category!')
-    //     flag = true;
-    // }
-    //
-    // else {
-    //   $("#add-product-category-error").text('')
-    //
-    // }
+
+
+    if(image_path != '')
+    {
+      let image_size = image.size;
+      let image_type = image.type;
+
+      let max_size = 2000000; // 2MB -> 2 000  000 bytes // JS returns the size in bytes
+      let allowed_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+      if(image_size > max_size){
+        $('#add-product-image-error').text('Please not above 2MB!')
+        flag = true;
+      }
+
+      else {
+        $('#add-product-image-error').html(final_add_img_path_product[2])
+
+        if(!allowed_types.includes(image_type))
+        {
+          flag = true;
+          $('#add-product-image-error').text('jpeg, jpg, png, gif')
+        }
+
+        else {
+          $('#add-product-image-error').html(final_add_img_path_product[2])
+        }
+      }
+
+
+    }
+
+    else {
+      flag = true;
+      $('#add-product-image-error').text('Please add image!')
+    }
+
+
+
+    if(!reProduct.test(name))
+    {
+      $("#add-product-name-error").text('Name is not correct!')
+      flag = true;
+    }
+    else {
+      $("#add-product-name-error").text('')
+    }
+
+    if(!rePrice.test(price))
+    {
+      $("#add-product-price-error").text('Price is not correct!')
+      flag = true;
+    }
+    else {
+      $("#add-product-price-error").text('')
+    }
+
+    if(!reDescription.test(description))
+    {
+      $("#add-product-description-error").text('Description is not correct!')
+      flag = true;
+
+
+    }
+    else {
+      if((/[\>\<\*]/).test(description))
+      {
+        $("#add-product-description-error").text('<>, * are not allowed!')
+        flag = true;
+      }
+      else {
+          $("#add-product-description-error").text('')
+      }
+
+    }
+
+    if(category_id == 0) {
+        $("#add-product-category-error").text('Please choose a category!')
+        flag = true;
+    }
+
+    else {
+      $("#add-product-category-error").text('')
+
+    }
 
     if(flag == false)
     {
@@ -813,16 +830,16 @@ $(document).ready(function(){
     let category_name = $("#add-category-name").val();
 
     let flag = false;
-    //
-    // if(!reCategory.test(category_name))
-    // {
-    //   $("#add-category-error").text('Name is not correct!')
-    //   flag = true;
-    // }
-    //
-    // else {
-    //   $("#add-category-error").text('')
-    // }
+
+    if(!reCategory.test(category_name))
+    {
+      $("#add-category-error").text('Name is not correct!')
+      flag = true;
+    }
+
+    else {
+      $("#add-category-error").text('')
+    }
 
     if(flag == false)
     {
@@ -884,7 +901,7 @@ $(document).ready(function(){
       success : function(data)
       {
 
-        foundedProductsByName(data);
+        foundedProductsByName(data.product);
       },
       error : function(xhr, status, responseText)
       {
@@ -894,12 +911,13 @@ $(document).ready(function(){
 
     function foundedProductsByName(data)
     {
+
       let x = ``;
 
 
-      if(data.product != null){
+      if(data != null){
 
-        for(let d of data.product)
+        for(let d of data)
         {
           x += `
           <section class="sec-product-detail bg0 p-t-105 p-b-70">
@@ -985,8 +1003,8 @@ $(document).ready(function(){
           `;
         }
 
-
         $("#filteredProductsAjax").html(x);
+
 
       }
 
@@ -1000,6 +1018,8 @@ $(document).ready(function(){
 
 
   });
+
+
 
 
 })
@@ -1034,79 +1054,79 @@ $(document).on('click', '#edit-product-btn', function(){
   let image_edit = $("#edit-product-file")[0].files[0];
 
 
-  //
-  //
-  //
-  // if(image_path_edit != '')
-  // {
-  //   let image_size = image_edit.size;
-  //   let image_type = image_edit.type;
-  //
-  //
-  //
-  //   let max_size = 2000000;
-  //   let allowed_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
-  //
-  //   if(image_size > max_size){
-  //
-  //     flag = true;
-  //     $('#edit-product-image-error').text('Please not above 2MB!');
-  //
-  //   }
-  //
-  //   else {
-  //     $('#edit-product-image-error').html(final_edit_img_path_product[2])
-  //
-  //     if(!allowed_types.includes(image_type))
-  //     {
-  //       flag = true;
-  //       $('#edit-product-image-error').text('jpeg, jpg, png, gif')
-  //     }
-  //
-  //     else {
-  //       $('#edit-product-image-error').html(final_edit_img_path_product[2])
-  //     }
-  //   }
-  //
-  //
-  // }
-  //
-  // if(!reProduct.test(name_edit))
-  // {
-  //   $("#edit-product-name-error").text('Name is not correct!')
-  //   flag = true;
-  // }
-  // else {
-  //   $("#edit-product-name-error").text('')
-  // }
-  //
-  // if(!rePrice.test(price_edit))
-  // {
-  //   $("#edit-product-price-error").text('Price is not correct!')
-  //   flag = true;
-  // }
-  // else {
-  //   $("#edit-product-price-error").text('')
-  // }
-  //
-  // if(!reDescription.test(description_edit))
-  // {
-  //   $("#edit-product-description-error").text('Description is not correct!')
-  //   flag = true;
-  //
-  //
-  // }
-  // else {
-  //   if((/[\>\<\*]/).test(description_edit))
-  //   {
-  //     $("#edit-product-description-error").text('<>, * are not allowed!')
-  //     flag = true;
-  //   }
-  //   else {
-  //       $("#edit-product-description-error").text('')
-  //   }
-  //
-  // }
+
+
+
+  if(image_path_edit != '')
+  {
+    let image_size = image_edit.size;
+    let image_type = image_edit.type;
+
+
+
+    let max_size = 2000000;
+    let allowed_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+
+    if(image_size > max_size){
+
+      flag = true;
+      $('#edit-product-image-error').text('Please not above 2MB!');
+
+    }
+
+    else {
+      $('#edit-product-image-error').html(final_edit_img_path_product[2])
+
+      if(!allowed_types.includes(image_type))
+      {
+        flag = true;
+        $('#edit-product-image-error').text('jpeg, jpg, png, gif')
+      }
+
+      else {
+        $('#edit-product-image-error').html(final_edit_img_path_product[2])
+      }
+    }
+
+
+  }
+
+  if(!reProduct.test(name_edit))
+  {
+    $("#edit-product-name-error").text('Name is not correct!')
+    flag = true;
+  }
+  else {
+    $("#edit-product-name-error").text('')
+  }
+
+  if(!rePrice.test(price_edit))
+  {
+    $("#edit-product-price-error").text('Price is not correct!')
+    flag = true;
+  }
+  else {
+    $("#edit-product-price-error").text('')
+  }
+
+  if(!reDescription.test(description_edit))
+  {
+    $("#edit-product-description-error").text('Description is not correct!')
+    flag = true;
+
+
+  }
+  else {
+    if((/[\>\<\*]/).test(description_edit))
+    {
+      $("#edit-product-description-error").text('<>, * are not allowed!')
+      flag = true;
+    }
+    else {
+        $("#edit-product-description-error").text('')
+    }
+
+  }
 
   if(flag == false)
   {
@@ -1226,15 +1246,15 @@ $(document).ready(function(){
 
     let flag = false;
 
-    // if(!reCategory.test(category_name))
-    // {
-    //   $("#edit-category-name-error").text('Name is not correct!')
-    //   flag = true;
-    // }
-    //
-    // else {
-    //   $("#edit-category-name-error").text('')
-    // }
+    if(!reCategory.test(category_name))
+    {
+      $("#edit-category-name-error").text('Name is not correct!')
+      flag = true;
+    }
+
+    else {
+      $("#edit-category-name-error").text('')
+    }
 
     if(flag == false)
     {
@@ -1304,47 +1324,47 @@ $(document).ready(function(){
 
     let flag = false;
 
-    // if(!reName.test(name))
-    // {
-    //   $("#name-contact-error").text('Name is not correct!')
-    //   flag = true;
-    //
-    // }
-    //
-    // else {
-    //   $("#name-contact-error").text('')
-    // }
-    // if(!reEmail.test(email))
-    // {
-    //   $("#email-contact-error").text('E-mail is not correct!')
-    //   flag = true;
-    //
-    //
-    // }
-    //
-    // else {
-    //   $("#email-contact-error").text('')
-    // }
-    //
-    // if(!reDescription.test(message))
-    // {
-    //   $("#message-contact-error").text('Message is not correct!')
-    //   flag = true;
-    //
-    //
-    // }
-    //
-    // else {
-    //   if((/[\>\<\*]/).test(message))
-    //   {
-    //     $("#message-contact-error").text('<>, * are not allowed!')
-    //     flag = true;
-    //   }
-    //   else {
-    //       $("#message-contact-error").text('')
-    //   }
-    //
-    // }
+    if(!reName.test(name))
+    {
+      $("#name-contact-error").text('Name is not correct!')
+      flag = true;
+
+    }
+
+    else {
+      $("#name-contact-error").text('')
+    }
+    if(!reEmail.test(email))
+    {
+      $("#email-contact-error").text('E-mail is not correct!')
+      flag = true;
+
+
+    }
+
+    else {
+      $("#email-contact-error").text('')
+    }
+
+    if(!reDescription.test(message))
+    {
+      $("#message-contact-error").text('Message is not correct!')
+      flag = true;
+
+
+    }
+
+    else {
+      if((/[\>\<\*]/).test(message))
+      {
+        $("#message-contact-error").text('<>, * are not allowed!')
+        flag = true;
+      }
+      else {
+          $("#message-contact-error").text('')
+      }
+
+    }
 
     if(flag == false)
     {
@@ -1445,35 +1465,35 @@ $(document).on('click', '#btn-checkout', function(){
 
   let flag = false;
 
-  // if(!reName.test(name))
-  // {
-  //   $("#full-name-checkout-error").text('Name is not correct!')
-  //   flag = true;
-  //
-  // }
-  // else {
-  //   $("#full-name-checkout-error").text('')
-  // }
-  //
-  // if(!rePhone.test(phone))
-  // {
-  //   $("#phone-checkout-error").text('Phone is not correct!')
-  //   flag = true;
-  //
-  // }
-  // else {
-  //   $("#phone-checkout-error").text('')
-  // }
-  //
-  // if(!reAddress.test(address))
-  // {
-  //   $("#address-checkout-error").text('Address is not correct!')
-  //   flag = true;
-  //
-  // }
-  // else {
-  //   $("#address-checkout-error").text('')
-  // }
+  if(!reName.test(name))
+  {
+    $("#full-name-checkout-error").text('Name is not correct!')
+    flag = true;
+
+  }
+  else {
+    $("#full-name-checkout-error").text('')
+  }
+
+  if(!rePhone.test(phone))
+  {
+    $("#phone-checkout-error").text('Phone is not correct!')
+    flag = true;
+
+  }
+  else {
+    $("#phone-checkout-error").text('')
+  }
+
+  if(!reAddress.test(address))
+  {
+    $("#address-checkout-error").text('Address is not correct!')
+    flag = true;
+
+  }
+  else {
+    $("#address-checkout-error").text('')
+  }
 
   if(flag == false)
   {
@@ -1492,10 +1512,10 @@ $(document).on('click', '#btn-checkout', function(){
       {
         if(data.inserted)
         {
-          $("#checkout-error").text('Thank you! :) We are proccessing your order and will send you and e-mail confirmation shortly.').fadeOut(7000);
+          $("#checkout-error").text('Thank you! :) We are proccessing your order and will send you and e-mail confirmation shortly.').fadeOut(3500);
           setTimeout(function(){
             window.location.href='\\home';
-          }, 7000)
+          }, 3000)
 
         }
 

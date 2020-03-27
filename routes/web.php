@@ -16,6 +16,8 @@
 
   Route::get('/products', 'ProductController@products'); // products
 
+  Route::post('/reset_pass_code', 'UserController@passCode') -> where(['id' => '[1-9]\d*']); // reset pass - email
+
   Route::get('/products/{id}', 'ProductController@product') -> where(['id' => '[1-9]\d*']); // product by id
 
   Route::resource('/enter', 'AuthController'); // enter - log in, sign up
@@ -38,6 +40,7 @@
   Route::post('/checkout', 'UserController@finalCheckout') -> name('finalCheckout');
 
   Route::post('/search', 'ProductController@searchProduct') -> name('searchProductByName'); // product search by name
+
 
 
   Route::post('/filterProductsByCategory', 'ProductController@productsByCategory') -> name('filterProductsByCategory'); // ajax - products filter by category
@@ -69,6 +72,8 @@
 
       Route::get('/add', 'CategoryController@addNewCategory');
       Route::post('/addCategory', 'CategoryController@addCategory') -> name('addCategory');
+
+
 
       Route::get('/edit/{id}', 'CategoryController@editCategory') -> where(['id' => '[1-9]\d*']);
       Route::post('/editCategory', 'CategoryController@updateCategory') -> name('editCategory');

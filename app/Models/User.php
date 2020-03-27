@@ -55,6 +55,7 @@ class User {
     -> join('user_cart AS uc', 'u.user_ID', '=', 'uc.user_ID')
     -> join('product AS p', 'p.product_ID', '=', 'uc.product_ID')
     -> select('uc.*', 'p.name', 'p.price')
+    -> where('ordered', '=', 0)
     -> get();
   }
   public function addToCart($user_id, $product_id)
@@ -94,7 +95,7 @@ class User {
     -> leftJoin('user_cart AS uc', 'uc.user_order_ID', '=', 'uo.user_order_ID')
     -> join('user AS u', 'u.user_ID', '=', 'uo.user_ID')
     -> groupBy('uo.user_order_ID', 'u.username', 'uo.address', 'uo.phone', 'uo.total_price', 'uo.ordered', 'uo.date')
-    -> get();
+    -> paginate(5);
   }
   public function updateTotalPrice($order, $total_price_order)
   {
@@ -152,9 +153,13 @@ class User {
     return \DB::table('user') -> select('user_ID') -> where('username', '=', $username) -> first();
   }
 
-  public function getPassword($password)
+  // public function getPassword($password)
+  // {
+  //   return \DB::table('user') -> select('password') -> where('password', '=', md5($password)) -> first();
+  // }
+  public function getPasswordByUsername($username)
   {
-    return \DB::table('user') -> select('password') -> where('password', '=', md5($password)) -> first();
+    return \DB::table('user') -> select('password') -> where('username', '=', $username) -> first();
   }
 
   public function getEmail($email)

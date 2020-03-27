@@ -41,6 +41,9 @@
 					@endforeach
 
 			</div>
+			<!-- <div id="txt_inform">
+
+			</div> -->
 			</form>
 		</div>
 	</div>

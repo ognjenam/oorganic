@@ -109,6 +109,7 @@ footer a:hover {
 #user-account{
   text-align: center;
 }
+
 #delete-img a{
 
   color: #81b03f
@@ -5130,7 +5131,7 @@ input.num-product::-webkit-inner-spin-button {
 
 }
 .errors-span{
-  /* display: inline-block!important; */
+  display: inline-block!important;
   margin-top: 1vh!important;
   color: #81b03f!important
 }
@@ -5143,4 +5144,19 @@ input.num-product::-webkit-inner-spin-button {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#ajaxProductsByCategory p{
+  text-align: center!important;
+  color: #81b03f;
+  font-style: italic;
+}
+#links_paginate {
+  display: flex;
+  justify-content: center;
+}
+#links_paginate a{
+  margin: 0px 10px;
+  color: #81b03f!important;
+  cursor: pointer;
 }

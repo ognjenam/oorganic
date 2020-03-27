@@ -104,7 +104,7 @@ class ProductController extends Controller
     public function adminProducts()
     {
 
-      $products = $this -> productModel -> getAllProducts();
+      $products = $this -> productModel -> getAllProductsPaginate();
       return view('/pages/dashboard/products', ['products' => $products]);
     }
 

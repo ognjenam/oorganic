@@ -65,9 +65,20 @@ class CategoryController extends Controller
 
           else {
             try{
+
               $categoryNameinDB = $this -> categoryModel -> getCategoryNameById($category_id);
-              File::move('main/images/' .$categoryNameinDB[0] -> name, 'main/images/' .$category_name);
-              $updated = $this -> categoryModel -> updateCategory($category_id, $category_name);
+
+              if(File::exists('main/images/' .$categoryNameinDB[0] -> name))
+              {
+                File::move('main/images/' .$categoryNameinDB[0] -> name, 'main/images/' .$category_name);
+                $updated = $this -> categoryModel -> updateCategory($category_id, $category_name);
+              }
+
+              else {
+                $updated = $this -> categoryModel -> updateCategory($category_id, $category_name);
+              }
+
+
               return response(['updated' => 'success'], 204);
             }
 

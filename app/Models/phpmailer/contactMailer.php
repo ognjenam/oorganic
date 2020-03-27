@@ -5,7 +5,8 @@ use PHPMailer\PHPMailer\Exception;
 //Load Composer's autoloader
 // require_once '../../config/database.php';
 // require_once '../../config/DB.php';
-require_once(__DIR__.'/vendor/autoload.php');
+
+require_once(base_path().'/vendor/autoload.php');
 
 function sendContactMail($to, $content, $name){
 

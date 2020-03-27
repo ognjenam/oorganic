@@ -28,14 +28,23 @@ class AuthController extends Controller
 
     $usernameExists = $this -> userModel -> getUsername($username_login);
 
+
+
     if($usernameExists)
     {
-      $isPasswordGood = $this -> userModel -> getPassword($password_login);
+      $isPasswordGood = $this -> userModel -> getPasswordByUsername($usernameExists -> username);
 
-      if($isPasswordGood)
+
+
+
+      if($isPasswordGood -> password == md5($password_login))
       {
         $user = $this -> userModel -> getByUsernameAndPassword($username_login, $password_login);
+
+
         $user_id = $user -> user_ID;
+
+
         $this -> userModel -> setUserToActive($user_id);
 
         $request -> session() -> put('user', $user);

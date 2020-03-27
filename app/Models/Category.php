@@ -11,7 +11,7 @@ class Category {
   }
   public function getAllCategoriesPaginate()
   {
-    return \DB::table('category AS c') -> select('c.name', 'c.category_ID',  \DB::raw('count(p.product_ID) AS productsNumber')) -> leftJoin('product AS p', 'c.category_ID', '=', 'p.category_ID')  -> groupBy('c.name', 'c.category_ID') -> orderBy('c.category_ID', 'asc')-> paginate(5);
+    return \DB::table('category AS c') -> select('c.name', 'c.category_ID',  \DB::raw('count(p.product_ID) AS productsNumber')) -> leftJoin('product AS p', 'c.category_ID', '=', 'p.category_ID')  -> groupBy('c.name', 'c.category_ID') -> orderBy('c.category_ID', 'asc')-> simplePaginate(5);
   }
   public function getCategoryById($id)
   {

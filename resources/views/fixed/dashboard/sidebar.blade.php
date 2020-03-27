@@ -7,7 +7,8 @@
             <li class="nav-item nav-profile">
               <a  class="nav-link">
                 <div class="nav-profile-image">
-                  <img src="{{asset('dashboard_user/assets/images/faces/profile.jpg')}}" alt="profile">
+
+                  <!-- <img src="{{asset('dashboard_user/assets/images/faces/profile.jpg')}}" alt="profile"> -->
                   <span class="login-status online"></span>
 
                 </div>
@@ -60,6 +61,13 @@
             <li class="nav-item">
               <a class="nav-link" href="{{route('logs')}}">
                 <span class="menu-title">Visits</span>
+                <i class="fa fa-user" aria-hidden="true"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+
+              <a class="nav-link" target='_blank' href="{{url('/documentation.pdf')}}">
+                <span class="menu-title">Documentation</span>
                 <i class="fa fa-user" aria-hidden="true"></i>
               </a>
             </li>

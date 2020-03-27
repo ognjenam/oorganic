@@ -40,7 +40,7 @@
                       </tbody>
                     </table>
                     <div class='pagination-links'>
-
+                      {{$orders -> links()}}
                     </div>
                   </div>
                 </div>
